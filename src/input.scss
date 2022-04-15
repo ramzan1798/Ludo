@@ -2,14 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+//$mini-mobile-container-dimension: 350px;
+//$mini-mobile-main-quadrant-dimension: 130px;
+//$mini-mobile-rail-quadrant-dimension: 90px;
+//$mini-mobile-main-quadrant-child-dimension:20px;
+
+
 $mobile-container-dimension: 400px;
 $mobile-main-quadrant-dimensions: 150px; // Top Left, Top Right, Bottom Left, Bottom Right
 $mobile-rail-quadrant-dimension: 100px; // Top, Bottom, Left, Right (Width, Height)
-$mobile-main-quadrant-child-dimensions: 70px; // Top, Left, Right, Bottom, Child Quadrant w-h
+$mobile-main-quadrant-child-dimensions: 20px; // Top, Left, Right, Bottom, Child Quadrant w-h
 
 $tablet-container-dimension: 500px;
 $tablet-main-quadrant-dimensions: 200px; // Top Left, Top Right, Bottom Left, Bottom Right
-$tablet-rail-quadrant-dimension: 150px; // Top, Bottom, Left, Right (Width, Height)
+$tablet-rail-quadrant-dimension: 100px; // Top, Bottom, Left, Right (Width, Height)
 $tablet-main-quadrant-child-dimensions: 35px; // Top, Left, Right, Bottom, Child Quadrant w-h
 
 $laptop-container-dimension: 600px;
@@ -17,337 +23,1013 @@ $laptop-main-quadrant-dimensions: 220px; // Top Left, Top Right, Bottom Left, Bo
 $laptop-rail-quadrant-dimension: 160px; // Top, Bottom, Left, Right (Width, Height)
 $laptop-main-quadrant-child-dimensions: 70px; // Top, Left, Right, Bottom, Child Quadrant w-h
 
+$mobile-screen-size: 500px;
+$tablet-screen-size: 768px;
+
 body {
-	height: 100vh;
-	width: 100vw;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-	.ludo {
-		width: $laptop-container-dimension;
-		height: $laptop-container-dimension;
-		background: khaki;
-		position: relative;
+  .ludo {
+    width: $laptop-container-dimension;
+    height: $laptop-container-dimension;
+    background: khaki;
+    position: relative;
 
-		@mixin laptop-main-quadrant-props {
-			position: absolute;
-			width: $laptop-main-quadrant-dimensions;
-			height: $laptop-main-quadrant-dimensions;
-		}
+    @mixin laptop-main-quadrant-props {
+      position: absolute;
+      width: $laptop-main-quadrant-dimensions;
+      height: $laptop-main-quadrant-dimensions;
+    }
 
-		@mixin players-props(
-			$main-quadrant-dimension,
-            $repel-range
-		) {
-			.player {
-				position: absolute;
-				width: $main-quadrant-dimension;
-				height: $main-quadrant-dimension;
-				border-radius: 100%;
-			}
+    @mixin players-props(
+      $main-quadrant-dimension,
+      $repel-range
+    ) {
+      .player {
+        position: absolute;
+        width: $main-quadrant-dimension;
+        height: $main-quadrant-dimension;
+        border-radius: 100%;
+      }
 
-			.top-left-player, .top-right-player {
-				top: $repel-range;
-			}
+      .top-left-player, .top-right-player {
+        top: $repel-range;
+      }
 
-			.bottom-left-player, .bottom-right-player {
-				bottom: $repel-range;
-			}
+      .bottom-left-player, .bottom-right-player {
+        bottom: $repel-range;
+      }
 
-			.top-left-player {
-				left: $repel-range;
-			}
+      .top-left-player {
+        left: $repel-range;
+      }
 
-			.top-right-player {
-				right: $repel-range;
-			}
+      .top-right-player {
+        right: $repel-range;
+      }
 
-			.bottom-left-player {
-				left: $repel-range;
-			}
+      .bottom-left-player {
+        left: $repel-range;
+      }
 
-			.bottom-right-player {
-				right: $repel-range;
-			}
-		}
+      .bottom-right-player {
+        right: $repel-range;
+      }
+    }
 
-		.blue, .red, .green, .purple {
-			@include laptop-main-quadrant-props;
-			@include players-props($laptop-main-quadrant-child-dimensions, 20px);
-		}
+    .blue, .red, .green, .purple {
+      @include laptop-main-quadrant-props;
+      @include players-props($laptop-main-quadrant-child-dimensions, 20px);
+    }
 
-		.blue, .red {
-			top: 0;
-		}
+    .blue, .red {
+      top: 0;
+    }
 
-		.green, .purple {
-			bottom: 0;
-		}
+    .green, .purple {
+      bottom: 0;
+    }
 
-		.blue {
-			left: 0;
-			background-color: dodgerblue;
+    .blue {
+      left: 0;
+      background-color: dodgerblue;
 
-			.player {
-				background: white;
-			}
-		}
+      .player {
+        background: white;
+      }
+    }
 
-		.red {
-			right: 0;
-			background-color: firebrick;
+    .red {
+      right: 0;
+      background-color: firebrick;
 
-			.player {
-				background: orange;
-			}
-		}
+      .player {
+        background: orange;
+      }
+    }
 
 
-		.green {
-			left: 0;
-			background-color: darkseagreen;
+    .green {
+      left: 0;
+      background-color: darkseagreen;
 
-			.player {
-				background: orange;
-			}
-		}
+      .player {
+        background: orange;
+      }
+    }
 
-		.purple {
-			right: 0;
-			background-color: purple;
+    .purple {
+      right: 0;
+      background-color: purple;
 
-			.player {
-				background: cyan;
-			}
-		}
+      .player {
+        background: cyan;
+      }
+    }
 
-		.rail-left {
-			display: flex;
-			flex-direction: column;
-			position: absolute;
-			top: 220px;
-			left: 0;
-			width: $laptop-main-quadrant-dimensions;
-			height: $laptop-rail-quadrant-dimension;
+    .rail-left {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: $laptop-main-quadrant-dimensions;
+      left: 0;
+      width: $laptop-main-quadrant-dimensions;
+      height: $laptop-rail-quadrant-dimension;
 
-			* {
-				display: flex;
-				flex: 1;
-				background-color: white;
-				border-bottom: 1px solid black;
+      * {
+        display: flex;
+        flex: 1;
+        background-color: white;
+        border-bottom: 1px solid black;
 
-				* {
-					width: 100%;
-					height: 100%;
-					background-color: skyblue;
-					border-right: 1px solid black ;
-				}
-			}
+        * {
+          width: 100%;
+          height: 100%;
+          background-color: skyblue;
+          border-right: 1px solid black;
+        }
+      }
 
-			.top-row {
-				.box2 {
-					background-color: dodgerblue;
-				}
-			}
-			.mid-row {
-				flex: 1;
-				background: blueviolet ;
+      .top-row {
+        .box2 {
+          background-color: dodgerblue;
+        }
+      }
 
-				* {
-					background-color: dodgerblue;
-				}
+      .mid-row {
+        flex: 1;
+        background: blueviolet;
 
-				.box1 {
-					background-color: skyblue;
-				}
-			}
-			.bottom-row {
-				flex: 1;
-				background-color: antiquewhite;
+        * {
+          background-color: dodgerblue;
+        }
 
-				.box3 {
-					background-color: dodgerblue;
-				}
-			}
-		}
+        .box1 {
+          background-color: skyblue;
+        }
+      }
 
-		.rail-top {
-			display: flex;
-			flex-direction: row;
-			position: absolute;
-			top: 0;
-			left: 220px;
-			width: $laptop-rail-quadrant-dimension;
-			height: $laptop-main-quadrant-dimensions;
+      .bottom-row {
+        flex: 1;
+        background-color: antiquewhite;
 
-			* {
-				display: flex;
-				flex-direction: column;
-				flex: 1;
-				background-color: white;
-				border-bottom: 1px solid black;
+        .box3 {
+          background-color: dodgerblue;
+        }
+      }
+    }
 
-				* {
-					width: 100%;
-					height: 100%;
-					background-color: skyblue;
-					border-right: 1px solid black ;
-				}
-			}
+    .rail-top {
+      display: flex;
+      flex-direction: row;
+      position: absolute;
+      top: 0;
+      left: $laptop-main-quadrant-dimensions;
+      width: $laptop-rail-quadrant-dimension;
+      height: $laptop-main-quadrant-dimensions;
 
-			.top-row {
-				.box3 {
-					background-color: firebrick;
-				}
-			}
-			.mid-row {
-				flex: 1;
-				background: blueviolet ;
+      * {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        background-color: white;
+        border-bottom: 1px solid black;
 
-				* {
-					background-color: firebrick;
-				}
+        * {
+          width: 100%;
+          height: 100%;
+          background-color: skyblue;
+          border-right: 1px solid black;
+        }
+      }
 
-				.box1 {
-					background-color: skyblue;
-				}
-			}
-			.bottom-row {
-				flex: 1;
-				background-color: antiquewhite;
+      .top-row {
+        .box3 {
+          background-color: firebrick;
+        }
+      }
 
-				.box2 {
-					background-color: firebrick;
-				}
-			}
-		}
+      .mid-row {
+        flex: 1;
+        background: blueviolet;
 
-		.rail-right {
-			display: flex;
-			flex-direction: column;
-			position: absolute;
-			top: 220px;
-			right: 0;
-			width: $laptop-main-quadrant-dimensions;
-			height: $laptop-rail-quadrant-dimension;
+        * {
+          background-color: firebrick;
+        }
 
-			* {
-				display: flex;
-				flex: 1;
-				background-color: white;
-				border-bottom: 1px solid black;
+        .box1 {
+          background-color: skyblue;
+        }
+      }
 
-				* {
-					width: 100%;
-					height: 100%;
-					background-color: skyblue;
-					border-right: 1px solid black ;
-				}
-			}
+      .bottom-row {
+        flex: 1;
+        background-color: antiquewhite;
 
-			.top-row {
-				.box4 {
-					background-color: purple;
-				}
-			}
-			.mid-row {
-				flex: 1;
-				background: blueviolet ;
+        .box2 {
+          background-color: firebrick;
+        }
+      }
+    }
 
-				* {
-					background-color: purple;
-				}
+    .rail-right {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: $laptop-main-quadrant-dimensions;
+      right: 0;
+      width: $laptop-main-quadrant-dimensions;
+      height: $laptop-rail-quadrant-dimension;
 
-				.box6 {
-					background-color: skyblue;
-				}
-			}
-			.bottom-row {
-				flex: 1;
-				background-color: antiquewhite;
+      * {
+        display: flex;
+        flex: 1;
+        background-color: white;
+        border-bottom: 1px solid black;
 
-				.box5 {
-					background-color: purple;
-				}
-			}
+        * {
+          width: 100%;
+          height: 100%;
+          background-color: skyblue;
+          border-right: 1px solid black;
+        }
+      }
 
-		}
-		.rail-bottom {
-			display: flex;
-			flex-direction: row;
-			position: absolute;
-			bottom: 0;
-			left: 220px;
-			width: $laptop-rail-quadrant-dimension;
-			height: $laptop-main-quadrant-dimensions;
+      .top-row {
+        .box4 {
+          background-color: purple;
+        }
+      }
 
-			* {
-				display: flex;
-				flex-direction: column;
-				flex: 1;
-				background-color: white;
-				border-bottom: 1px solid black;
+      .mid-row {
+        flex: 1;
+        background: blueviolet;
 
-				* {
-					width: 100%;
-					height: 100%;
-					background-color: skyblue;
-					border-right: 1px solid black ;
-				}
-			}
+        * {
+          background-color: purple;
+        }
 
-			.top-row {
-				.box5 {
-					background-color: darkseagreen;
-				}
-			}
-			.mid-row {
-				flex: 1;
-				background: blueviolet ;
+        .box6 {
+          background-color: skyblue;
+        }
+      }
 
-				* {
-					background-color: darkseagreen;
-				}
+      .bottom-row {
+        flex: 1;
+        background-color: antiquewhite;
 
-				.box6 {
-					background-color: skyblue;
-				}
-			}
-			.bottom-row {
-				flex: 1;
-				background-color: antiquewhite;
+        .box5 {
+          background-color: purple;
+        }
+      }
 
-				.box4 {
-					background-color: darkseagreen;
-				}
-			}
+    }
 
-		}
+    .rail-bottom {
+      display: flex;
+      flex-direction: row;
+      position: absolute;
+      bottom: 0;
+      left: $laptop-main-quadrant-dimensions;
+      width: $laptop-rail-quadrant-dimension;
+      height: $laptop-main-quadrant-dimensions;
 
-		.winner {
-			width: $laptop-rail-quadrant-dimension;
-			height: $laptop-rail-quadrant-dimension;
-			position: absolute;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			left: $laptop-main-quadrant-dimensions;
-			top: $laptop-main-quadrant-dimensions;
+      * {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        background-color: white;
+        border-bottom: 1px solid black;
 
-			.logo-name {
-				display: flex;
-				position: absolute;
-				width: 121%;
-				background: yellow;
-              	justify-content: space-between;
-				align-items: center;
-				padding: 0 30px;
-				transform: rotate(45deg);
-			}
+        * {
+          width: 100%;
+          height: 100%;
+          background-color: skyblue;
+          border-right: 1px solid black;
+        }
+      }
 
-		}
-	}
+      .top-row {
+        .box5 {
+          background-color: darkseagreen;
+        }
+      }
+
+      .mid-row {
+        flex: 1;
+        background: blueviolet;
+
+        * {
+          background-color: darkseagreen;
+        }
+
+        .box6 {
+          background-color: skyblue;
+        }
+      }
+
+      .bottom-row {
+        flex: 1;
+        background-color: antiquewhite;
+
+        .box4 {
+          background-color: darkseagreen;
+        }
+      }
+
+    }
+
+    .winner {
+      width: $laptop-rail-quadrant-dimension;
+      height: $laptop-rail-quadrant-dimension;
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      left: $laptop-main-quadrant-dimensions;
+      top: $laptop-main-quadrant-dimensions;
+
+      .logo-name {
+        display: flex;
+        position: absolute;
+        width: 121%;
+        background: yellow;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 30px;
+        transform: rotate(45deg);
+        border-radius: 50px;
+      }
+    }
+  }
+
+  @media (max-width: $tablet-screen-size) {
+    .ludo {
+      width: $tablet-container-dimension;
+      height: $tablet-container-dimension;
+
+      @mixin laptop-main-quadrant-props {
+        width: $tablet-main-quadrant-dimensions;
+        height: $tablet-main-quadrant-dimensions;
+      }
+
+      @mixin players-props(
+        $main-quadrant-dimension,
+        $repel-range
+      ) {
+        .player {
+          position: absolute;
+          width: $main-quadrant-dimension;
+          height: $main-quadrant-dimension;
+        }
+
+
+        .top-left-player, .top-right-player {
+          top: $repel-range;
+        }
+        .bottom-left-player, .bottom-right-player {
+          bottom: $repel-range;
+        }
+
+        .top-left-player {
+          left: $repel-range;
+        }
+
+        .top-right-player {
+          right: $repel-range;
+        }
+
+        .bottom-left-player {
+          left: $repel-range;
+        }
+
+        .bottom-right-player {
+          right: $repel-range;
+        }
+      }
+
+      .blue, .red, .green, .purple {
+        @include laptop-main-quadrant-props;
+        @include players-props($tablet-main-quadrant-child-dimensions, 20px);
+      }
+
+      .blue, .red {
+        top: 0;
+      }
+
+      .green, .purple {
+        bottom: 0;
+      }
+
+      .blue {
+        left: 0;
+        background-color: dodgerblue;
+
+        .player {
+          background: white;
+        }
+      }
+
+      .red {
+        right: 0;
+        background-color: firebrick;
+
+        .player {
+          background: orange;
+        }
+      }
+
+
+      .green {
+        left: 0;
+        background-color: darkseagreen;
+
+        .player {
+          background: orange;
+        }
+      }
+
+      .purple {
+        right: 0;
+        background-color: purple;
+
+        .player {
+          background: cyan;
+        }
+      }
+
+      .rail-left {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: $tablet-main-quadrant-dimensions;
+        left: 0;
+        width: $tablet-main-quadrant-dimensions;
+        height: $tablet-rail-quadrant-dimension;
+
+        * {
+          display: flex;
+          flex: 1;
+          background-color: white;
+          border-bottom: 1px solid black;
+
+          * {
+            width: 100%;
+            height: 100%;
+            background-color: skyblue;
+            border-right: 1px solid black;
+          }
+        }
+
+        .top-row {
+          .box2 {
+            background-color: dodgerblue;
+          }
+        }
+
+        .mid-row {
+          flex: 1;
+          background: blueviolet;
+
+          * {
+            background-color: dodgerblue;
+          }
+
+          .box1 {
+            background-color: skyblue;
+          }
+        }
+
+        .bottom-row {
+          flex: 1;
+          background-color: antiquewhite;
+
+          .box3 {
+            background-color: dodgerblue;
+          }
+        }
+      }
+
+      .rail-top {
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        top: 0;
+        left: $tablet-main-quadrant-dimensions;
+        width: $tablet-rail-quadrant-dimension;
+        height: $tablet-main-quadrant-dimensions;
+
+        * {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          background-color: white;
+          border-bottom: 1px solid black;
+
+          * {
+            width: 100%;
+            height: 100%;
+            background-color: skyblue;
+            border-right: 1px solid black;
+          }
+        }
+
+        .top-row {
+          .box3 {
+            background-color: firebrick;
+          }
+        }
+
+        .mid-row {
+          flex: 1;
+          background: blueviolet;
+
+          * {
+            background-color: firebrick;
+          }
+
+          .box1 {
+            background-color: skyblue;
+          }
+        }
+
+        .bottom-row {
+          flex: 1;
+          background-color: antiquewhite;
+
+          .box2 {
+            background-color: firebrick;
+          }
+        }
+      }
+
+      .rail-right {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: $tablet-main-quadrant-dimensions;
+        right: 0;
+        width: $tablet-main-quadrant-dimensions;
+        height: $tablet-rail-quadrant-dimension;
+
+        * {
+          display: flex;
+          flex: 1;
+          background-color: white;
+          border-bottom: 1px solid black;
+
+          * {
+            width: 100%;
+            height: 100%;
+            background-color: skyblue;
+            border-right: 1px solid black;
+          }
+        }
+
+        .top-row {
+          .box4 {
+            background-color: purple;
+          }
+        }
+
+        .mid-row {
+          flex: 1;
+          background: blueviolet;
+
+          * {
+            background-color: purple;
+          }
+
+          .box6 {
+            background-color: skyblue;
+          }
+        }
+
+        .bottom-row {
+          flex: 1;
+          background-color: antiquewhite;
+
+          .box5 {
+            background-color: purple;
+          }
+        }
+
+      }
+
+      .rail-bottom {
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        bottom: 0;
+        left: $tablet-main-quadrant-dimensions;
+        width: $tablet-rail-quadrant-dimension;
+        height: $tablet-main-quadrant-dimensions;
+
+        * {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          background-color: white;
+          border-bottom: 1px solid black;
+
+          * {
+            width: 100%;
+            height: 100%;
+            background-color: skyblue;
+            border-right: 1px solid black;
+          }
+        }
+
+        .top-row {
+          .box5 {
+            background-color: darkseagreen;
+          }
+        }
+
+        .mid-row {
+          flex: 1;
+          background: blueviolet;
+
+          * {
+            background-color: darkseagreen;
+          }
+
+          .box6 {
+            background-color: skyblue;
+          }
+        }
+
+        .bottom-row {
+          flex: 1;
+          background-color: antiquewhite;
+
+          .box4 {
+            background-color: darkseagreen;
+          }
+        }
+
+      }
+
+      .winner {
+        width: $tablet-rail-quadrant-dimension;
+        height: $tablet-rail-quadrant-dimension;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        left: $tablet-main-quadrant-dimensions;
+        top: $tablet-main-quadrant-dimensions;
+
+        .logo-name {
+          display: flex;
+          position: absolute;
+          width: 121%;
+          background: yellow;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 30px;
+          transform: rotate(45deg);
+          border-radius: 50px;
+        }
+      }
+    }
+  }
+
+  @media (max-width: $mobile-screen-size) {
+    .ludo {
+      width: $mobile-container-dimension;
+      height: $mobile-container-dimension;
+
+      @mixin laptop-main-quadrant-props {
+        width: $mobile-main-quadrant-dimensions;
+        height: $mobile-main-quadrant-dimensions;
+      }
+
+      @mixin players-props(
+        $main-quadrant-dimension,
+        $repel-range
+      ) {
+        .player {
+          width: $main-quadrant-dimension;
+          height: $main-quadrant-dimension;
+        }
+
+        .top-left-player, .top-right-player {
+          top: $repel-range;
+        }
+
+        .bottom-left-player, .bottom-right-player {
+          bottom: $repel-range;
+        }
+
+        .top-left-player {
+          left: $repel-range;
+        }
+
+        .top-right-player {
+          right: $repel-range;
+        }
+
+        .bottom-left-player {
+          left: $repel-range;
+        }
+
+        .bottom-right-player {
+          right: $repel-range;
+        }
+      }
+
+      .blue, .red, .green, .purple {
+        @include laptop-main-quadrant-props;
+        @include players-props($mobile-main-quadrant-child-dimensions, 20px);
+      }
+
+      .blue, .red {
+        top: 0;
+      }
+
+      .green, .purple {
+        bottom: 0;
+      }
+
+      .blue {
+        left: 0;
+        background-color: dodgerblue;
+
+        .player {
+          background: white;
+        }
+      }
+
+      .red {
+        right: 0;
+        background-color: firebrick;
+
+        .player {
+          background: orange;
+        }
+      }
+
+
+      .green {
+        left: 0;
+        background-color: darkseagreen;
+
+        .player {
+          background: orange;
+        }
+      }
+
+      .purple {
+        right: 0;
+        background-color: purple;
+
+        .player {
+          background: cyan;
+        }
+      }
+
+      .rail-left {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: $mobile-main-quadrant-dimensions;
+        left: 0;
+        width: $mobile-main-quadrant-dimensions;
+        height: $mobile-rail-quadrant-dimension;
+
+        * {
+          display: flex;
+          flex: 1;
+          background-color: white;
+          border-bottom: 1px solid black;
+
+          * {
+            width: 100%;
+            height: 100%;
+            background-color: skyblue;
+            border-right: 1px solid black;
+          }
+        }
+
+        .top-row {
+          .box2 {
+            background-color: dodgerblue;
+          }
+        }
+
+        .mid-row {
+          flex: 1;
+          background: blueviolet;
+
+          * {
+            background-color: dodgerblue;
+          }
+
+          .box1 {
+            background-color: skyblue;
+          }
+        }
+
+        .bottom-row {
+          flex: 1;
+          background-color: antiquewhite;
+
+          .box3 {
+            background-color: dodgerblue;
+          }
+        }
+      }
+
+      .rail-top {
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        top: 0;
+        left: $mobile-main-quadrant-dimensions;
+        width: $mobile-rail-quadrant-dimension;
+        height: $mobile-main-quadrant-dimensions;
+
+        * {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          background-color: white;
+          border-bottom: 1px solid black;
+
+          * {
+            width: 100%;
+            height: 100%;
+            background-color: skyblue;
+            border-right: 1px solid black;
+          }
+        }
+
+        .top-row {
+          .box3 {
+            background-color: firebrick;
+          }
+        }
+
+        .mid-row {
+          flex: 1;
+          background: blueviolet;
+
+          * {
+            background-color: firebrick;
+          }
+
+          .box1 {
+            background-color: skyblue;
+          }
+        }
+
+        .bottom-row {
+          flex: 1;
+          background-color: antiquewhite;
+
+          .box2 {
+            background-color: firebrick;
+          }
+        }
+      }
+
+      .rail-right {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: $mobile-main-quadrant-dimensions;
+        right: 0;
+        width: $mobile-main-quadrant-dimensions;
+        height: $mobile-rail-quadrant-dimension;
+
+        * {
+          display: flex;
+          flex: 1;
+          background-color: white;
+          border-bottom: 1px solid black;
+
+          * {
+            width: 100%;
+            height: 100%;
+            background-color: skyblue;
+            border-right: 1px solid black;
+          }
+        }
+
+        .top-row {
+          .box4 {
+            background-color: purple;
+          }
+        }
+
+        .mid-row {
+          flex: 1;
+          background: blueviolet;
+
+          * {
+            background-color: purple;
+          }
+
+          .box6 {
+            background-color: skyblue;
+          }
+        }
+
+        .bottom-row {
+          flex: 1;
+          background-color: antiquewhite;
+
+          .box5 {
+            background-color: purple;
+          }
+        }
+
+      }
+
+      .rail-bottom {
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        bottom: 0;
+        left: $mobile-main-quadrant-dimensions;
+        width: $mobile-rail-quadrant-dimension;
+        height: $mobile-main-quadrant-dimensions;
+
+        * {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          background-color: white;
+          border-bottom: 1px solid black;
+
+          * {
+            width: 100%;
+            height: 100%;
+            background-color: skyblue;
+            border-right: 1px solid black;
+          }
+        }
+
+        .top-row {
+          .box5 {
+            background-color: darkseagreen;
+          }
+        }
+
+        .mid-row {
+          flex: 1;
+          background: blueviolet;
+
+          * {
+            background-color: darkseagreen;
+          }
+
+          .box6 {
+            background-color: skyblue;
+          }
+        }
+
+        .bottom-row {
+          flex: 1;
+          background-color: antiquewhite;
+
+          .box4 {
+            background-color: darkseagreen;
+          }
+        }
+
+      }
+
+      .winner {
+        width: $mobile-rail-quadrant-dimension;
+        height: $mobile-rail-quadrant-dimension;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        left: $mobile-main-quadrant-dimensions;
+        top: $mobile-main-quadrant-dimensions;
+
+        .logo-name {
+          display: flex;
+          position: absolute;
+          width: 121%;
+          background: yellow;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 30px;
+          transform: rotate(45deg);
+        }
+
+      }
+    }
+  }
+
 }
 
 
